@@ -6,14 +6,14 @@ package com.nagihong.androidsimplify.recyclerView.expandable
  */
 abstract class BaseExpandableSection : BaseSection() {
 
-  val types by lazy(LazyThreadSafetyMode.NONE) { collectTypes() }
+    val types by lazy(LazyThreadSafetyMode.NONE) { collectTypes() }
 
-  abstract fun collectTypes(): List<Int>
+    abstract fun collectTypes(): List<Int>
 
-  abstract fun typeAt(position: Int): Int
+    abstract fun typeAt(position: Int): Int
 
-  override fun type() = -1
+    override fun type() = -1
 
-  abstract fun childCountAt(position: Int): Int
+    abstract fun childCountAt(position: Int): Int
 
 }
