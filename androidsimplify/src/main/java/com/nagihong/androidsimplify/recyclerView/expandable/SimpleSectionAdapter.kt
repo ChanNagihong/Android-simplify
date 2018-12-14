@@ -22,10 +22,24 @@ class SimpleSectionAdapter(
 
     constructor(section: BaseSection) : this(mutableListOf(section))
 
-    fun addSection(section: BaseSection) {
-        val new = sections.toMutableList()
-        new.add(section)
-        sections = new
+    fun addSection(section: BaseSection, reset: Boolean = false) {
+        sections = if (reset) {
+            listOf(section)
+        } else {
+            val new = sections.toMutableList()
+            new.add(section)
+            new
+        }
+    }
+
+    fun addSections(sections: List<BaseSection>, reset: Boolean = true) {
+        this.sections = if (reset) {
+            sections
+        } else {
+            val new = sections.toMutableList()
+            new.addAll(sections)
+            new
+        }
     }
 
     init {

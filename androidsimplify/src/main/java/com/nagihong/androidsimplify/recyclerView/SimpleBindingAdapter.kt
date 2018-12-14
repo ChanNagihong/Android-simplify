@@ -7,7 +7,6 @@ open class SimpleBindingAdapter<BINDING : ViewDataBinding, DATA>(@LayoutRes priv
     BaseBindingAdapter<BINDING, DATA>() {
 
     var onGetItemId: ((position: Int, data: DATA) -> Long)? = null
-    var onItemClick: ((binding: BINDING, position: Int, data: DATA) -> Unit)? = null
 
     override fun layoutId() = layoutId
 

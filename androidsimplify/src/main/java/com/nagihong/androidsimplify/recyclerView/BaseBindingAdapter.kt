@@ -13,6 +13,7 @@ abstract class BaseBindingAdapter<BINDING : ViewDataBinding, DATA> :
     RecyclerView.Adapter<SimpleBindingViewHolder<BINDING, DATA>>() {
 
     var data: List<DATA>? = null
+    var onItemClick: ((binding: BINDING, position: Int, data: DATA) -> Unit)? = null
 
     @LayoutRes
     abstract fun layoutId(): Int
@@ -33,7 +34,12 @@ abstract class BaseBindingAdapter<BINDING : ViewDataBinding, DATA> :
     override fun onBindViewHolder(
         holder: SimpleBindingViewHolder<BINDING, DATA>,
         position: Int
-    ) = holder.bind(data!![position])
+    ) {
+        holder.binding.apply {
+            root.setOnClickListener { onItemClick?.invoke(this, position, data!![position]) }
+        }
+        holder.bind(data!![position])
+    }
 
     override fun getItemCount() = data?.size ?: 0
 
