@@ -8,11 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 open class BaseBindingViewHolder<BINDING : ViewDataBinding, DATA>(
-    parent: ViewGroup,
-    @LayoutRes layoutId: Int,
-    val binding: BINDING = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
-) :
-    RecyclerView.ViewHolder(binding.root) {
+        parent: ViewGroup,
+        @LayoutRes layoutId: Int,
+        val binding: BINDING = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)) :
+        RecyclerView.ViewHolder(binding.root) {
 
     var data: DATA? = null
 

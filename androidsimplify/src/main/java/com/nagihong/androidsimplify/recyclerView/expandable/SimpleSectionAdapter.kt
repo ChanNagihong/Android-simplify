@@ -1,12 +1,13 @@
 package com.nagihong.androidsimplify.recyclerView.expandable
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.ViewGroup
-import timber.log.Timber
+import com.nagihong.androidsimplify.recyclerView.SimpleAdapterDataObserver
 
 class SimpleSectionAdapter(
-        private var sections: List<BaseSection>,
-        enableStableIds: Boolean = false
+    private var sections: List<BaseSection>,
+    enableStableIds: Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var count = 0
@@ -42,15 +43,15 @@ class SimpleSectionAdapter(
     }
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): RecyclerView.ViewHolder {
         return typeIndex[viewType]!!.onCreateViewHolder(parent, viewType)
     }
 
     override fun onBindViewHolder(
-            holder: RecyclerView.ViewHolder,
-            position: Int
+        holder: RecyclerView.ViewHolder,
+        position: Int
     ) {
         val section = mapSection(position)
         val sectionPosition = mapSectionPosition(position)
@@ -62,7 +63,7 @@ class SimpleSectionAdapter(
     override fun getItemViewType(position: Int): Int {
         val section = mapSection(position)
         if (null == section) {
-            Timber.d("warning: return default type at position: $position")
+            Log.d(javaClass.name, "warning: return default type at position: $position")
             return 0
         }
         return if (section is BaseExpandableSection) {
