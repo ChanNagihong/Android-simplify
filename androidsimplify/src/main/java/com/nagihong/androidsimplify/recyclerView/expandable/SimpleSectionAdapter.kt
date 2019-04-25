@@ -1,15 +1,12 @@
 package com.nagihong.androidsimplify.recyclerView.expandable
 
-import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
-import com.nagihong.androidsimplify.recyclerView.SimpleAdapterDataObserver
+import timber.log.Timber
 
-@SuppressLint("LogNotTimber")
 class SimpleSectionAdapter(
-    var sections: List<BaseSection>,
-    enableStableIds: Boolean = false
+        private var sections: List<BaseSection>,
+        enableStableIds: Boolean = false
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var count = 0
@@ -22,24 +19,20 @@ class SimpleSectionAdapter(
 
     constructor(section: BaseSection) : this(mutableListOf(section))
 
-    fun addSection(section: BaseSection, reset: Boolean = false) {
-        sections = if (reset) {
-            listOf(section)
-        } else {
-            val new = sections.toMutableList()
-            new.add(section)
-            new
-        }
+    fun addSection(section: BaseSection) {
+        val new = sections.toMutableList()
+        new.add(section)
+        sections = new
     }
 
-    fun addSections(sections: List<BaseSection>, reset: Boolean = true) {
-        this.sections = if (reset) {
-            sections
-        } else {
-            val new = sections.toMutableList()
-            new.addAll(sections)
-            new
-        }
+    fun addSections(sections: List<BaseSection>) {
+        val new = this.sections.toMutableList()
+        new.addAll(sections)
+        this.sections = new
+    }
+
+    fun setSections(sections: List<BaseSection>) {
+        this.sections = sections
     }
 
     init {
@@ -49,15 +42,15 @@ class SimpleSectionAdapter(
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+            parent: ViewGroup,
+            viewType: Int
     ): RecyclerView.ViewHolder {
         return typeIndex[viewType]!!.onCreateViewHolder(parent, viewType)
     }
 
     override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int
+            holder: RecyclerView.ViewHolder,
+            position: Int
     ) {
         val section = mapSection(position)
         val sectionPosition = mapSectionPosition(position)
@@ -69,7 +62,7 @@ class SimpleSectionAdapter(
     override fun getItemViewType(position: Int): Int {
         val section = mapSection(position)
         if (null == section) {
-            Log.d(javaClass.name, "warning: return default type at position: $position")
+            Timber.d("warning: return default type at position: $position")
             return 0
         }
         return if (section is BaseExpandableSection) {
